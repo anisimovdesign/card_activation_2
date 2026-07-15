@@ -59,16 +59,12 @@
   z-index: 1;
 }
 
-.variant-envelope__layer--flaps {
-  z-index: 3;
+.variant-envelope__layer--card {
+  z-index: 2;
 }
 
-.variant-envelope__card-stage {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: visible;
-  z-index: 2;
+.variant-envelope__layer--flaps {
+  z-index: 3;
 }
 
 .variant-envelope__inside,
@@ -128,7 +124,6 @@
 .variant-envelope.is-card-revealed .variant-envelope__card {
   transition: transform var(--env-card-duration) cubic-bezier(0.33, 0.86, 0.36, 1);
   transform: translate(var(--card-dx, 0), var(--card-dy, 0)) scale(var(--card-scale, 1));
-  z-index: 10;
 }
 
 .variant-envelope.is-card-settled .variant-envelope__layer--inside,
