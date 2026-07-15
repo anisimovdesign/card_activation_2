@@ -94,8 +94,12 @@
 .activation__intro {
   width: 327px;
   max-width: calc(100% - 48px);
-  margin-top: auto;
-  padding: 0 0 120px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 120px;
+  margin-top: 0;
+  padding: 0;
   text-align: center;
   flex-shrink: 0;
   overflow: hidden;
@@ -216,6 +220,7 @@
 }
 
 .activation.is-keyboard .activation__intro {
+  bottom: auto;
   margin-top: 0;
   opacity: 0;
   visibility: hidden;

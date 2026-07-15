@@ -129,11 +129,31 @@
     );
 
     this.envelope = global.VariantEnvelope.create(envelopeHost, envelopeOpts);
+    this._lockViewportHeight();
+  };
+
+  ActivationScreen.prototype._lockViewportHeight = function () {
+    var self = this;
+    var apply = function () {
+      if (self.root.classList.contains('is-keyboard')) return;
+      var height =
+        window.visualViewport && window.visualViewport.height
+          ? window.visualViewport.height
+          : window.innerHeight;
+      self.root.style.height = height + 'px';
+    };
+
+    apply();
+    window.addEventListener('resize', apply);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', apply);
+    }
   };
 
   ActivationScreen.prototype._pinCardStage = function () {
     var body = this.root.querySelector('.activation__body');
     var center = this.root.querySelector('.activation__center');
+    var intro = this.root.querySelector('.activation__intro');
     if (!body || !center || center.dataset.pinned === '1') return;
 
     var bodyRect = body.getBoundingClientRect();
@@ -146,6 +166,17 @@
     center.style.zIndex = '2';
     center.style.pointerEvents = 'none';
     center.dataset.pinned = '1';
+
+    if (intro && intro.dataset.pinned !== '1') {
+      var introRect = intro.getBoundingClientRect();
+      intro.style.position = 'absolute';
+      intro.style.left = introRect.left - bodyRect.left + 'px';
+      intro.style.top = introRect.top - bodyRect.top + 'px';
+      intro.style.width = introRect.width + 'px';
+      intro.style.marginTop = '0';
+      intro.style.transform = 'none';
+      intro.dataset.pinned = '1';
+    }
   };
 
   ActivationScreen.prototype._showKeyboard = function () {
