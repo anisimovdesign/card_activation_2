@@ -163,7 +163,7 @@
     center.style.left = rect.left - bodyRect.left + 'px';
     center.style.top = rect.top - bodyRect.top + 'px';
     center.style.width = rect.width + 'px';
-    center.style.zIndex = '2';
+    center.style.zIndex = '5';
     center.style.pointerEvents = 'none';
     center.dataset.pinned = '1';
 

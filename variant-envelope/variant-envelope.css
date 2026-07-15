@@ -121,9 +121,15 @@
   pointer-events: none;
 }
 
+.variant-envelope.is-card-revealed .variant-envelope__masked {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
 .variant-envelope.is-card-revealed .variant-envelope__card {
   transition: transform var(--env-card-duration) cubic-bezier(0.33, 0.86, 0.36, 1);
   transform: translate(var(--card-dx, 0), var(--card-dy, 0)) scale(var(--card-scale, 1));
+  z-index: 10;
 }
 
 .variant-envelope.is-card-settled .variant-envelope__layer--inside,
