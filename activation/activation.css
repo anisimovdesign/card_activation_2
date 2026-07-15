@@ -104,10 +104,6 @@
   text-align: center;
   flex-shrink: 0;
   overflow: hidden;
-  transition:
-    opacity var(--activation-keyboard-duration) cubic-bezier(0.33, 0.86, 0.36, 1),
-    max-height var(--activation-keyboard-duration) cubic-bezier(0.33, 0.86, 0.36, 1),
-    padding var(--activation-keyboard-duration) cubic-bezier(0.33, 0.86, 0.36, 1);
 }
 
 .activation__hint {
