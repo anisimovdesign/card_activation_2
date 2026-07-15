@@ -59,12 +59,16 @@
   z-index: 1;
 }
 
-.variant-envelope__layer--card {
-  z-index: 2;
-}
-
 .variant-envelope__layer--flaps {
   z-index: 3;
+}
+
+.variant-envelope__card-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 2;
 }
 
 .variant-envelope__inside,
@@ -119,11 +123,6 @@
 
 .variant-envelope.is-revealed {
   pointer-events: none;
-}
-
-.variant-envelope.is-card-revealed .variant-envelope__masked {
-  -webkit-mask-image: none;
-  mask-image: none;
 }
 
 .variant-envelope.is-card-revealed .variant-envelope__card {

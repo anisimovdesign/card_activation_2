@@ -2,7 +2,8 @@
  * VariantEnvelope — layered card envelope (Variant 2 assets).
  *
  * Layers (bottom → top):
- *   pink_inside → card → envelope_bottom → envelope_top → tear animation
+ *   masked: pink_inside → envelope_bottom → envelope_top
+ *   card (outside mask) → tear animation
  */
 (function (global) {
   'use strict';
@@ -62,11 +63,6 @@
       opts.insideSrc +
       '" alt="" draggable="false" width="325" height="218">' +
       '</div>' +
-      '<div class="variant-envelope__layer variant-envelope__layer--card">' +
-      '<img class="variant-envelope__card" src="' +
-      opts.cardSrc +
-      '" alt="" draggable="false" width="305" height="192">' +
-      '</div>' +
       '<div class="variant-envelope__layer variant-envelope__layer--flaps">' +
       '<img class="variant-envelope__bottom" src="' +
       opts.bottomSrc +
@@ -75,6 +71,11 @@
       opts.topSrc +
       '" alt="" draggable="false" width="335" height="55">' +
       '</div>' +
+      '</div>' +
+      '<div class="variant-envelope__card-stage">' +
+      '<img class="variant-envelope__card" src="' +
+      opts.cardSrc +
+      '" alt="" draggable="false" width="305" height="192">' +
       '</div>' +
       '<div class="variant-envelope__tear"></div>';
 
