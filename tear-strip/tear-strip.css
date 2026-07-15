@@ -1,0 +1,206 @@
+.tear-strip {
+  --ts-green: #19ca41;
+  --ts-green-dark: #0d8a32;
+  --ts-green-darker: #0a6b28;
+  --ts-seg-w: 24.6px;
+  --ts-seg-h: 30px;
+  --ts-strip-w: 510px;
+  --ts-handle-w: 75px;
+  --ts-handle-h: 43px;
+  --ts-gap: 8px;
+  --ts-tear: 0px;
+  --ts-shadow-left: 0px;
+  --ts-shadow-width: 0px;
+  --ts-track-x: 0px;
+  --ts-trail-w: 0px;
+  --ts-seg-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 36'%3E%3Cpath fill='%23000' d='M0 0H20L30 6V30L20 36H0V0Z'/%3E%3C/svg%3E");
+
+  position: relative;
+  width: var(--ts-strip-w);
+  overflow: visible;
+  user-select: none;
+  touch-action: none;
+}
+
+.tear-strip.is-complete {
+  pointer-events: none;
+}
+
+.tear-strip__stage {
+  position: relative;
+  width: var(--ts-strip-w);
+  height: var(--ts-seg-h);
+  overflow: visible;
+}
+
+.tear-strip__shadow {
+  position: absolute;
+  left: var(--ts-shadow-left);
+  bottom: -7px;
+  height: 14px;
+  width: var(--ts-shadow-width);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.26) 0%,
+    rgba(0, 0, 0, 0.1) 45%,
+    transparent 72%
+  );
+  filter: blur(2px);
+  transform: translateY(2px) scaleY(0.65);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.tear-strip__bottom {
+  position: absolute;
+  inset: 0;
+  width: var(--ts-strip-w);
+  height: var(--ts-seg-h);
+  z-index: 1;
+}
+
+.tear-strip__torn-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--ts-seg-h);
+  z-index: 3;
+  pointer-events: none;
+  overflow: visible;
+  will-change: transform, width;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+}
+
+.tear-strip__scatter {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.tear-strip--scatter .tear-strip__torn-track {
+  display: none;
+}
+
+.ts-seg--scatter {
+  animation: ts-seg-scatter 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
+}
+
+@keyframes ts-seg-scatter {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  62% {
+    transform: translate(var(--ts-fly-x, -30px), var(--ts-fly-y, -18px))
+      rotate(var(--ts-fly-rot, -15deg));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--ts-fly-x, -30px), var(--ts-fly-y, -18px))
+      rotate(var(--ts-fly-rot, -15deg));
+    opacity: 0;
+  }
+}
+
+.ts-seg--torn {
+  background-size: var(--ts-trail-w) 100%;
+  background-repeat: no-repeat;
+  background-position: var(--ts-seg-bg-x, 0) 0;
+  transform: scaleX(-1) scaleY(var(--ts-seg-scale-y, 1));
+  transform-origin: center center;
+  -webkit-mask-image: var(--ts-seg-mask);
+  mask-image: var(--ts-seg-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.tear-strip__torn-track.is-falling {
+  animation: ts-top-fall 0.85s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+.ts-seg {
+  position: absolute;
+  top: 0;
+  width: calc(var(--ts-seg-w) + var(--ts-seg-overlap, 1px));
+  height: var(--ts-seg-h);
+}
+
+.ts-seg.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.ts-seg svg,
+.ts-seg-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tear-strip__handle {
+  position: absolute;
+  top: calc((var(--ts-seg-h) - var(--ts-handle-h)) / 2);
+  left: calc(var(--ts-tear) - var(--ts-handle-w) / 2 + var(--ts-handle-rest-offset, 0px));
+  width: var(--ts-handle-w);
+  height: var(--ts-handle-h);
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: grab;
+  z-index: 5;
+  transform: translateX(0);
+  transition: opacity 0.25s ease;
+}
+
+.tear-strip__handle:active {
+  cursor: grabbing;
+}
+
+.tear-strip__handle svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tear-strip:not(.is-dragging):not(.is-complete) .tear-strip__handle {
+  animation: ts-handle-hint 1.8s ease-in-out infinite;
+}
+
+.tear-strip.is-dragging .tear-strip__handle {
+  animation: none;
+}
+
+.tear-strip.is-complete .tear-strip__handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes ts-handle-hint {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes ts-top-fall {
+  0% {
+    transform: translateX(var(--ts-track-x)) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--ts-track-x)) translateY(115px);
+    opacity: 0;
+  }
+}
